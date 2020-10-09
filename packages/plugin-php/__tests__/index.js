@@ -18,11 +18,19 @@ describe('php', () => {
     });
   });
 
-  it('does not try to resolve packages', () => {
+  it('resolves laravel', () => {
     expect(
       php.resolve(path, [
         'Illuminate\\Contracts\\Container\\BindingResolutionException',
       ]),
-    ).toEqual(undefined);
+    ).toEqual({
+      registry: 'ping',
+      target:
+        'https://laravel.com/api/8.x/Illuminate/Contracts/Container/BindingResolutionException.html',
+    });
+  });
+
+  it('does not try to resolve packages', () => {
+    expect(php.resolve(path, ['Foo\\Bar\\Baz'])).toEqual([]);
   });
 });

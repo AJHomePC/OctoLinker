@@ -5,8 +5,18 @@ export default {
   name: 'PHP',
 
   resolve(path, [target], meta, regExp) {
+    if (target.startsWith('Illuminate')) {
+      return liveResolverQuery({
+        type: 'ping',
+        target: `https://laravel.com/api/8.x/${target.replace(
+          /\\/g,
+          '/',
+        )}.html`,
+      });
+    }
+
     if (target.includes('\\')) {
-      return;
+      return [];
     }
 
     if (regExp === PHP_FUNC) {
